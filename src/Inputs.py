@@ -64,12 +64,12 @@ class Inputs:
             inputs = raw_data[cur_byte]
             frames = raw_data[cur_byte + 1]
             trick = (inputs & 0x70) >> 0x4
-            extra_frames = inputs & 0x0F 
+            extra_frames = (inputs & 0x0F) << 8
 
             trick_inputs += [trick] * (frames + extra_frames)
             cur_byte += 2
 
-        self.inputs = [(button_inputs[i][0], button_inputs[i][1], button_inputs[i][2], analog_inputs[i][0], analog_inputs[i][1], trick_inputs[i]) 
+        self.inputs = [(button_inputs[i][0], button_inputs[i][1], button_inputs[i][2], analog_inputs[i][0], analog_inputs[i][1], trick_inputs[i])
                         for i in range(len(button_inputs))]
 
     # credit: https://github.com/APerson13/DTM-To-Txt
