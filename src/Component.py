@@ -37,7 +37,8 @@ class Categorical_C(Component):
 
     def process_input_and_draw(self, current_input):
         cur_info = self.categories[current_input]
-        self.canvas.draw_image(cur_info["image"], cur_info["position"])
+        if cur_info["image"] is not None:
+            self.canvas.draw_image(cur_info["image"], cur_info["position"])
 
 
 class Tuple_C(Component):
