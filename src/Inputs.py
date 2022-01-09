@@ -27,7 +27,8 @@ class Inputs:
     def read_ghost_file(self, file_name):
         with open(file_name, "rb") as f:
             src = f.read()
-        raw_data = decode_RKG(src[0x8C:]) # remove the rkg header and decompress
+
+        raw_data = decode_RKG(src) # remove the rkg header and decompress
 
         # header
         nr_button_inputs = (raw_data[0] << 0x8) | raw_data[1]
@@ -68,6 +69,8 @@ class Inputs:
 
             trick_inputs += [trick] * (frames + extra_frames)
             cur_byte += 2
+
+        print(f"len(button_inputs): {len(button_inputs)}, len(analog_inputs): {len(analog_inputs)}, len(trick_inputs): {len(trick_inputs)}")
 
         self.inputs = [(button_inputs[i][0], button_inputs[i][1], button_inputs[i][2], analog_inputs[i][0], analog_inputs[i][1], trick_inputs[i])
                         for i in range(len(button_inputs))]
