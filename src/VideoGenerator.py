@@ -16,7 +16,7 @@ class VideoGenerator:
         self.inputs = Inputs()
         self.internal_frame_rate = self.inputs.read_file(ghost_file)
 
-    def run(self, output_filename="video.mov"):
+    def run(self, output_filename="video.mov", ffmpeg_filename="ffmpeg"):
         #video = cv2.VideoWriter(f"demp.{VIDEO_EXTENSION}", cv2.VideoWriter_fourcc(*VIDEO_CODEC), VIDEO_FRAME_RATE, self.controller.size)
         output_filepath = pathlib.Path(output_filename)
         if output_filepath.suffix == "" or output_filepath.suffix[1:] != VIDEO_EXTENSION:
@@ -24,7 +24,7 @@ class VideoGenerator:
 
         output_filepath.parent.mkdir(parents=True, exist_ok=True)
 
-        p = Popen(["ffmpeg", "-y", "-f", "image2pipe", "-framerate", str(VIDEO_FRAME_RATE), "-i", "-",
+        p = Popen([ffmpeg_filename, "-y", "-f", "image2pipe", "-framerate", str(VIDEO_FRAME_RATE), "-i", "-",
         "-vcodec", "png", "-framerate", str(VIDEO_FRAME_RATE), output_filename],
         stdin=PIPE, stdout=DEVNULL, stderr=STDOUT)
 
