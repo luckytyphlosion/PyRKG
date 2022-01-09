@@ -30,7 +30,10 @@ class Controller:
             try:
                 comp_class = getattr(importlib.import_module("src.Component"), comp["name"])
             except AttributeError:
-                comp_class = getattr(importlib.import_module(f"layouts.{layout_name}.Component"), comp["name"])
+                try:
+                    comp_class = getattr(importlib.import_module("PyRKG.Component"), comp["name"])
+                except AttributeError:
+                    comp_class = getattr(importlib.import_module(f"layouts.{layout_name}.Component"), comp["name"])
             input_type = comp["input_type"] if "input_type" in comp else None
             instance = comp_class(self.canvas, input_type)
             instance.init_component(comp["info"])
