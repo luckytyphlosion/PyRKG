@@ -42,4 +42,5 @@ class VideoGenerator:
 
             frame_f += self.internal_frame_rate / VIDEO_FRAME_RATE
 
+        p.stdin.close()
         #video.release()
